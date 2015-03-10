@@ -1,0 +1,45 @@
+\documentclass[extrafontsizes,48pt]{memoir}
+
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{euler}
+\usepackage{units}
+
+\usepackage{tikz}
+\usepackage{longtable}
+
+\def\spiral#1{%
+  \pgfmathparse{int(#1)}%
+  \ifnum\pgfmathresult>0
+    \draw [black!10] (0,0) rectangle ++(1,1);
+    \begin{scope}[shift={(1,1)}, rotate=90, scale=1/1.6180339887]
+      \spiral{#1-1}
+    \end{scope}
+    \draw [black!60] (0,0) arc (270:360:1);
+  \fi
+}
+
+\newcommand{\Card}[1]{
+\begin{tikzpicture}
+  \begin{scope}[scale=5,xshift=3,yshift=3]
+    \spiral{12}
+  \end{scope}
+  \draw[ultra thick, rounded corners=5mm] (0,0) rectangle (6,9);
+  \node at (3,4.5) { $#1$ };
+\end{tikzpicture}
+}
+
+\begin{document}
+\centering
+\Huge
+\begin{longtable}{cc}
+  \Card{1} & \Card{2} \\ 
+  \Card{3} & \Card{5} \\
+  \Card{8} & \Card{13} \\
+  \Card{20} & \Card{42} \\
+  \Card{99} & \Card{\infty} \\
+  \Card{\pi}
+\end{longtable}
+\end{document}
